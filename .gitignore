@@ -1,0 +1,5 @@
+.venv/
+sciencebenchmark_dataset/
+*.pyc
+__pycache__/
+*.ipynb

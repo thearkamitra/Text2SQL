@@ -1,0 +1,586 @@
+{
+  "topics": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Unique identifier or code for the research topic (e.g., ERC or Horizon call topic code)."
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Reference Control Number (RCN) associated with the topic for internal CORDIS tracking."
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full title or name of the research topic or funding call."
+    }
+  ],
+  "funding_schemes": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Short code identifying the funding scheme (e.g., FP7, H2020, MC)."
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Human-readable title or name of the funding scheme."
+    }
+  ],
+  "ec_framework_programs": [
+    {
+      "name": "ec_framework_program_name",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Name of the European Commission Framework Program (e.g., FP7, Horizon 2020)."
+    }
+  ],
+  "people": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Unique internal ID for the person (auto-incremented primary key)."
+    },
+    {
+      "name": "full_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full name of the individual associated with the project (e.g., investigator or staff)."
+    }
+  ],
+  "erc_research_domains": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "ERC research domain code (e.g., PE for Physical Sciences, LS for Life Sciences)."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Description of the ERC research domain."
+    }
+  ],
+  "erc_panels": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "ERC panel code representing a specific subfield (e.g., PE3 for Condensed Matter Physics)."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full description of the ERC panel (discipline or subfield)."
+    },
+    {
+      "name": "part_of",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Parent ERC domain code (e.g., PE panel is part of PE domain)."
+    }
+  ],
+  "countries": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Unique internal identifier for the country."
+    },
+    {
+      "name": "country_name",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Full name of the country."
+    },
+    {
+      "name": "country_code2",
+      "type": "VARCHAR(2)",
+      "nullable": false,
+      "description": "Two-letter ISO country code (ISO Alpha-2)."
+    },
+    {
+      "name": "country_code3",
+      "type": "VARCHAR(3)",
+      "nullable": false,
+      "description": "Three-letter ISO country code (ISO Alpha-3)."
+    },
+    {
+      "name": "geocode_country_code",
+      "type": "VARCHAR(2)",
+      "nullable": true,
+      "description": "Optional geocoding reference for mapping (may duplicate ISO Alpha-2)."
+    }
+  ],
+  "institutions": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Unique internal ID for the institution (primary key)."
+    },
+    {
+      "name": "country_id",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Reference to the country (foreign key to countries.unics_id)."
+    },
+    {
+      "name": "institutions_name",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Full name of the institution."
+    },
+    {
+      "name": "geocode_regions_3",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "NUTS-3 regional geocode for the institution’s location."
+    },
+    {
+      "name": "db_pedia_url",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Link to the institution’s DBpedia page (if available)."
+    },
+    {
+      "name": "wikidata_url",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Link to the institution’s Wikidata entry."
+    },
+    {
+      "name": "grid_id",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Global Research Identifier Database (GRID) ID for the institution."
+    },
+    {
+      "name": "acronym",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Acronym or abbreviated name of the institution."
+    },
+    {
+      "name": "short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Short name or alias for the institution."
+    },
+    {
+      "name": "website",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Institution’s official website URL."
+    },
+    {
+      "name": "document_vectors",
+      "type": "TSVECTOR",
+      "nullable": true,
+      "description": "Full-text search vector for the institution (used for fast text queries)."
+    }
+  ],
+  "eu_territorial_units": [
+    {
+      "name": "geocode_regions",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "NUTS geocode for the region (European statistical classification)."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full name or description of the territorial unit."
+    },
+    {
+      "name": "geocode_level",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Level of the NUTS classification (0–3)."
+    },
+    {
+      "name": "nuts_version",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Version of the NUTS classification (e.g., 2013)."
+    }
+  ],
+  "programmes": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Programme code (e.g., FP7-REGIONS, H2020)."
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Reference Control Number for the programme."
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full title of the programme."
+    },
+    {
+      "name": "short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Abbreviated or short name of the programme."
+    },
+    {
+      "name": "parent",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Parent programme code (for hierarchical grouping)."
+    }
+  ],
+  "project_erc_panels": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Reference to the project (foreign key to projects.unics_id)."
+    },
+    {
+      "name": "panel",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "ERC panel code linked to the project."
+    }
+  ],
+  "projects": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Unique identifier for the project (primary key)."
+    },
+    {
+      "name": "acronym",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Short acronym representing the project."
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full title of the project."
+    },
+    {
+      "name": "ec_call",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Identifier of the EU funding call under which the project was funded."
+    },
+    {
+      "name": "ec_fund_scheme",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Code of the funding scheme associated with the project (e.g., MC-IRG)."
+    },
+    {
+      "name": "cordis_ref",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "CORDIS reference number of the project."
+    },
+    {
+      "name": "ec_ref",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "European Commission reference identifier."
+    },
+    {
+      "name": "start_date",
+      "type": "DATE",
+      "nullable": true,
+      "description": "Official start date of the project."
+    },
+    {
+      "name": "end_date",
+      "type": "DATE",
+      "nullable": true,
+      "description": "Official end date of the project."
+    },
+    {
+      "name": "start_year",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Year the project started."
+    },
+    {
+      "name": "end_year",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Year the project ended."
+    },
+    {
+      "name": "homepage",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Project’s official homepage URL (if available)."
+    },
+    {
+      "name": "total_cost",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "description": "Total cost of the project (in EUR)."
+    },
+    {
+      "name": "ec_max_contribution",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "description": "Maximum contribution from the European Commission (in EUR)."
+    },
+    {
+      "name": "framework_program",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Framework programme under which the project was funded (e.g., FP7)."
+    },
+    {
+      "name": "objective",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Project objectives and goals (usually long-form text)."
+    },
+    {
+      "name": "principal_investigator",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Reference to the principal investigator (foreign key to people.unics_id)."
+    }
+  ],
+  "activity_types": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Activity type code (e.g., HES for Higher Education Sector)."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Description of the type of activity or sector."
+    }
+  ],
+  "project_members": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Unique identifier for the project member record (primary key)."
+    },
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Reference to the project (foreign key to projects.unics_id)."
+    },
+    {
+      "name": "pic_number",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Participant Identification Code (PIC) for the organization."
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Reference Control Number for the member’s involvement."
+    },
+    {
+      "name": "member_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full name of the participating organization or entity."
+    },
+    {
+      "name": "activity_type",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Code indicating the sector (e.g., HES, PRC, PUB)."
+    },
+    {
+      "name": "country",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Two-letter country code (ISO Alpha-2) of the member."
+    },
+    {
+      "name": "street",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Street address of the member institution."
+    },
+    {
+      "name": "city",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "City where the member is based."
+    },
+    {
+      "name": "postal_code",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Postal code of the member’s address."
+    },
+    {
+      "name": "ec_contribution",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "description": "Financial contribution from the European Commission to this member (in EUR)."
+    },
+    {
+      "name": "institution_id",
+      "type": "INTEGER",
+      "nullable": true,
+      "description": "Reference to the institution (foreign key to institutions.unics_id)."
+    },
+    {
+      "name": "member_role",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Role of the member in the project (e.g., coordinator, partner)."
+    },
+    {
+      "name": "geocode_regions_3",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "NUTS-3 geocode for the member’s location."
+    },
+    {
+      "name": "member_short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Abbreviated or short name of the member."
+    },
+    {
+      "name": "department_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Department name within the member organization."
+    },
+    {
+      "name": "vat_number",
+      "type": "VARCHAR",
+      "nullable": true,
+      "description": "VAT identification number of the member organization."
+    },
+    {
+      "name": "latitude",
+      "type": "NUMERIC",
+      "nullable": true,
+      "description": "Latitude of the member’s location."
+    },
+    {
+      "name": "longitude",
+      "type": "NUMERIC",
+      "nullable": true,
+      "description": "Longitude of the member’s location."
+    },
+    {
+      "name": "region_code",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Code representing the region where the member is located."
+    },
+    {
+      "name": "region_name",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Name of the region where the member is located."
+    }
+  ],
+  "project_member_roles": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Code for the role (e.g., coordinator, partner, beneficiary)."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Full description of the project member role."
+    }
+  ],
+  "project_programmes": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Reference to the project (foreign key to projects.unics_id)."
+    },
+    {
+      "name": "programme",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Programme code associated with the project."
+    }
+  ],
+  "project_subject_areas": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Reference to the project (foreign key to projects.unics_id)."
+    },
+    {
+      "name": "subject_area",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Code of the subject area associated with the project."
+    }
+  ],
+  "subject_areas": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Code representing the subject area (e.g., ICT, MBI)."
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Human-readable name of the subject area."
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "description": "Description of the subject area."
+    }
+  ],
+  "project_topics": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "description": "Reference to the project (foreign key to projects.unics_id)."
+    },
+    {
+      "name": "topic",
+      "type": "TEXT",
+      "nullable": false,
+      "description": "Topic code linked to the project (foreign key to topics.code)."
+    }
+  ]
+}
