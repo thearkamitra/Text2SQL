@@ -56,3 +56,8 @@ python -m eval/evaluate_non_langchain.py
 
 Follow the instructions in the project documentation to start the application.
 
+
+
+
+The models that have been used for groq can be found here:
+https://console.groq.com/docs/rate-limits

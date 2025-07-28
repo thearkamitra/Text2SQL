@@ -66,7 +66,7 @@ class BaseLLMAgent(ABC):
 
 class OpenAIAgent(BaseLLMAgent):
     """OpenAI LLM agent implementation"""
-    
+
     def __init__(self, model_name: str = "gpt-4o", **kwargs):
         super().__init__(model_name, **kwargs)
         self._llm = None
@@ -81,6 +81,7 @@ class OpenAIAgent(BaseLLMAgent):
             self._llm = ChatOpenAI(
                 model_name=self.model_name,
                 openai_api_key=api_key,
+                temperature=0.0,
                 **self.config
             )
         return self._llm
@@ -96,8 +97,8 @@ class OpenAIAgent(BaseLLMAgent):
 
 class GroqAgent(BaseLLMAgent):
     """Groq LLM agent implementation"""
-    
-    def __init__(self, model_name: str = "llama3-8b-8192", **kwargs):
+
+    def __init__(self, model_name: str = "llama-3.1-8b-instant", **kwargs):
         super().__init__(model_name, **kwargs)
         self._llm = None
     
@@ -112,6 +113,7 @@ class GroqAgent(BaseLLMAgent):
             self._llm = ChatGroq(
                 model_name=self.model_name,
                 groq_api_key=api_key,
+                temperature=0.0,
                 **self.config
             )
         return self._llm
@@ -128,7 +130,7 @@ class GroqAgent(BaseLLMAgent):
 class OllamaAgent(BaseLLMAgent):
     """Ollama LLM agent implementation"""
     
-    def __init__(self, model_name: str = "llama2", base_url: str = "http://localhost:11434", **kwargs):
+    def __init__(self, model_name: str = "qwen3:0.6b", base_url: str = "http://localhost:11434", **kwargs):
         super().__init__(model_name, **kwargs)
         self.base_url = base_url
         self._llm = None
@@ -139,6 +141,7 @@ class OllamaAgent(BaseLLMAgent):
             self._llm = OllamaLLM(
                 model=self.model_name,
                 base_url=self.base_url,
+                temperature=0.0,
                 **self.config
             )
         return self._llm
@@ -182,13 +185,13 @@ class LLMAgentFactory:
             )
         elif provider == LLMProvider.GROQ:
             return GroqAgent(
-                model_name=model_name or "llama3-8b-8192",
+                model_name=model_name or "llama-3.1-8b-instant",
                 env_path_name=env_path_name,
                 **kwargs
             )
         elif provider == LLMProvider.OLLAMA:
             return OllamaAgent(
-                model_name=model_name or "llama2",
+                model_name=model_name or "qwen3:0.6b",
                 env_path_name=env_path_name,
                 **kwargs
             )

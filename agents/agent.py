@@ -6,6 +6,7 @@ This agent takes natural language queries and converts them to SQL using table s
 import json
 import os
 import re
+import argparse
 from typing import Dict, List, Union, Optional, Any
 from dataclasses import dataclass
 
@@ -262,6 +263,7 @@ IMPORTANT GUIDELINES:
 4. Use appropriate WHERE clauses to filter for relevant rows
 5. Make the query as human-readable and efficient as possible
 6. Use proper SQL syntax and formatting
+7. Make sure that the questions are not changed or altered in any way
 
 Table Schema Information:
 {table_info}
@@ -284,24 +286,30 @@ IMPORTANT GUIDELINES:
 6. Make queries as human-readable and efficient as possible
 7. All the questions are independent and should be answered separately
 8. Use proper SQL syntax and formatting
-             
-Table Schema Information:
+9. Make sure that the questions are not changed or altered in any way
+10. Make the tables and the columns as descriptive as possible
+11. Use the tables that are in the table information and the table names original are the columns present in the actual database
+
+Table Information:
 {table_info}
 
 Column Information (if available):
 {column_info}
 
+
 Expected output format:
 [{{"question":"First question","sql":"SELECT DISTINCT ..."}},{{"question":"Second question","sql":"SELECT ..."}}, ...]"""),
             ("human", "Convert these natural language questions to SQL queries: {questions}")
         ])
-    
-    def generate_sql(self, question: Union[str, List[str]]) -> List[Dict[str, str]]:
+
+    def generate_sql(self, question: Union[str, List[str]], use_columns: bool = True, use_descriptions: bool = True) -> List[Dict[str, str]]:
         """
         Generate SQL query/queries from natural language question(s)
         
         Args:
             question: Single question string or list of questions
+            use_columns: Whether to include column information in prompts
+            use_descriptions: Whether to include column descriptions in prompts
             
         Returns:
             List of dictionaries with 'question' and 'sql' keys
@@ -313,8 +321,12 @@ Expected output format:
             raise ValueError("No table schemas provided. Use add_table_schema() or ensure schema files are loaded.")
         
         table_info = self.tables_data
-        column_info = self.columns_data
-        
+        # Use descriptions based on the flag
+        column_info = self.columns_descriptions if use_descriptions and hasattr(self, 'columns_descriptions') else self.columns_data
+        if not use_columns:
+            # If not using columns, just pass empty info
+            column_info = {}
+
         # Create parser instance
         parser = SQLOutputParser()
         
@@ -329,7 +341,6 @@ Expected output format:
                 "table_info": table_info,
                 "column_info": column_info
             })
-            breakpoint()  # For debugging purposes
             llm_result = llm_result.content if hasattr(llm_result, 'content') else llm_result
             # Parse the result with questions context
             result = parser.parse(llm_result, questions=question)
@@ -384,5 +395,108 @@ def create_sql_agent(provider: LLMProvider,
     )
 
 
+def main():
+    """Main function with argparse for CLI usage"""
+    parser = argparse.ArgumentParser(
+        description="SQL Generation Agent - Convert natural language to SQL queries",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python agent.py --provider groq --descriptive
+  python agent.py --provider openai --no-descriptive
+  python agent.py --provider ollama --model "qwen2:0.5b"
+        """
+    )
+    
+    # Provider selection
+    parser.add_argument(
+        '--provider', 
+        choices=['groq', 'openai', 'ollama'],
+        default='groq',
+        help='LLM provider to use (default: groq)'
+    )
+    
+    # Model selection
+    parser.add_argument(
+        '--model',
+        type=str,
+        help='Model name to use (optional, uses provider defaults if not specified)'
+    )
+    
+    # Column descriptions flag
+    parser.add_argument(
+        '--use_column',
+        action='store_true',
+        default=False,
+        help='Use column information in prompts (default: False)'
+    )
+    
+    parser.add_argument(
+        '--no-descriptive',
+        dest='descriptive',
+        action='store_false',
+        help='Do not use column descriptions, use basic column info only'
+    )
+    
+    # Single question input
+    parser.add_argument(
+        '--question',
+        type=str,
+        help='Single question to convert to SQL',
+        default=None
+    )
+    
+    args = parser.parse_args()
+    
+    # Map provider string to enum
+    provider_map = {
+        'groq': LLMProvider.GROQ,
+        'openai': LLMProvider.OPENAI,
+        'ollama': LLMProvider.OLLAMA
+    }
+    
+        # Create agent with specified provider and model
+    agent_kwargs = {}
+    if args.model:
+        agent_kwargs['model_name'] = args.model
+        
+    agent = create_sql_agent(
+        provider=provider_map[args.provider],
+        **agent_kwargs
+    )
+    
+    print(f"✅ Agent created successfully!")
+    print(f"📊 Model Info: {agent.get_model_info()}")
+    print(f"🔧 Using descriptions: {args.descriptive}")
+    
+    # Determine questions to process
+    
+    if args.use_column is False:
+        args.descriptive = False
+
+    if args.question:
+        # Single question
+        print(f"\n🔍 Processing single question:")
+        print(f"   Question: {args.question}")
+        result = agent.generate_sql(args.question, use_columns=args.use_column, use_descriptions=args.descriptive)
+        print(f"   Result: {json.dumps(result, indent=2)}")
+        
+    else:
+
+        with open("datasets/total_interest.json") as f:
+            data = json.load(f)
+        questions = [item["question"] for item in data]
+        if args.model is None:
+            args.model = agent.get_model_info().get("model_name")
+        
+        result = agent.generate_sql(questions, use_columns=args.use_column, use_descriptions=args.descriptive)
+        print(f"   Results: {json.dumps(result, indent=2)}")
+        string_name = f"{args.provider}_{args.model}_{args.descriptive}_{args.use_column}.json"
+        with open("datasets/" + string_name, "w") as f:
+            json.dump(result, f, indent=2)
+
+    return 0
+
+
 if __name__ == "__main__":
-    pass
+    main()
