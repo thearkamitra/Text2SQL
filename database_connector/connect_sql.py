@@ -3,8 +3,9 @@ import dotenv
 import os
 
 class Connector:
-    def __init__(self, path: str = None):
+    def __init__(self, path: str = None, timeout_seconds: int = 20):
         self.engine = None
+        self.timeout_seconds = timeout_seconds*1000
         if not path:
             path = os.path.abspath(__file__).replace("connect_sql.py", ".env")
             print(f"No path provided, using default: {path}")
@@ -22,6 +23,7 @@ class Connector:
             return "No engine found. Please check the connection."
 
         with self.engine.connect() as conn:
+            conn.execute(text(f"SET statement_timeout = {self.timeout_seconds}"))
             result = conn.execute(text(query)).fetchall()
             return result
         return "There was an error executing the query."      

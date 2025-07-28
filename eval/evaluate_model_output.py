@@ -20,8 +20,9 @@ def combine_all(path="datasets/openai_4o_False_False.json"):
     model_predictions = get_model_predictions(path=path)
     for item in gt_data:
         question = item["question"].lower().rstrip()
+        item["model_prediction"] = None
         for model in model_predictions:
-            if model["question"].lower().rstrip() == question:
+            if model["question"].lower().rstrip().lstrip() == question:
                 item["model_prediction"] = model["sql"]
                 break
         if not item.get("model_prediction"):

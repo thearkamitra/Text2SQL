@@ -5,6 +5,7 @@ This module provides functionality to compare the different execution results.
 
 import signal
 from contextlib import contextmanager
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from tqdm import tqdm
 from database_connector.connect_sql import Connector
 from utils.metrics import execution_match
@@ -13,22 +14,21 @@ class ExecutionMetrics:
     def __init__(self, db_path: str = "database_connector/.env"):
         self.connector = Connector(path=db_path)
 
-    @contextmanager
-    def timeout(self, seconds):
-        """Context manager for timing out operations"""
-        def timeout_handler(signum, frame):
-            raise TimeoutError(f"Operation timed out after {seconds} seconds")
+    def execute_with_timeout(self, prediction, ground_truth, timeout_seconds=4):
+        """Execute both queries with timeout using ThreadPoolExecutor"""
+        def execute_queries():
+            prediction_result = self.get_execution_result(prediction)
+            ground_truth_result = self.get_execution_result(ground_truth)
+            prediction_result = [row._asdict() for row in prediction_result]
+            ground_truth_result = [row._asdict() for row in ground_truth_result]
+            return prediction_result, ground_truth_result
         
-        # Set the signal handler
-        old_handler = signal.signal(signal.SIGALRM, timeout_handler)
-        signal.alarm(seconds)
-        
-        try:
-            yield
-        finally:
-            # Restore the old signal handler
-            signal.alarm(0)
-            signal.signal(signal.SIGALRM, old_handler)
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(execute_queries)
+            try:
+                return future.result(timeout=timeout_seconds)
+            except FuturesTimeoutError:
+                raise TimeoutError(f"Query execution timed out after {timeout_seconds} seconds")
 
     def get_execution_result(self, query: str):
         """Executes a SQL query and returns the result."""
@@ -55,18 +55,16 @@ class ExecutionMetrics:
         for prediction, ground_truth in progress_bar:
             executable = True
             try:
-                # Execute with 60 second timeout
-                with self.timeout(60):
-                    prediction_result = self.get_execution_result(prediction)
-                    ground_truth_result = self.get_execution_result(ground_truth)
-                    prediction_result = [row._asdict() for row in prediction_result]
-                    ground_truth_result = [row._asdict() for row in ground_truth_result]
+                # Execute with timeout using ThreadPoolExecutor
+                prediction_result, ground_truth_result = self.execute_with_timeout(
+                    prediction, ground_truth, timeout_seconds=4
+                )
             except TimeoutError as e:
                 executable = False
-                progress_bar.set_postfix({"Error": f"Timeout: {str(e)[:30]}..."})
+                progress_bar.set_postfix({"Status": "Timeout"})
             except Exception as e:
                 executable = False
-                progress_bar.set_postfix({"Error": f"Execution failed: {str(e)[:30]}..."})
+                progress_bar.set_postfix({"Status": f"Error: {str(e)[:20]}..."})
 
             if not executable:
                 correct.append(False)
