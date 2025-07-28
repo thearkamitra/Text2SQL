@@ -45,7 +45,7 @@ class SQLGenerationAgent:
             **kwargs
         )
         self.llm = self.llm_agent.create_llm()
-
+        self.few_shot = kwargs.get('few_shot', True)
         self.table_schemas = {}
         self._setup_prompts()
         self._load_default_schemas()
@@ -114,6 +114,15 @@ IMPORTANT: Follow these rules:
             )
         )
 
+        actual_examples = ('{{"question": "Show me project member roles for the project member INSTITUTO SUPERIOR TECNICO", "sql": "SELECT project_member_roles.description FROM project_member_roles JOIN project_members ON project_member_roles.code = project_members.member_role WHERE project_members.member_name = \'INSTITUTO SUPERIOR TECNICO\'"}}, '
+                '{{"question": "Show me all projects members that are not in the same location as 16.5972215.", "sql": "SELECT projects.homepage FROM projects JOIN project_members ON projects.unics_id = project_members.project WHERE project_members.longitude != 16.5972215"}}'
+        )  
+        fake_example = ('{{"question": "Example Question 1", "sql": "SELECT * FROM table WHERE ..."}}, '
+                        '{{"question": "Example Question 2", "sql": "SELECT col FROM another_table ..."}}'
+        )
+
+        example_block = actual_examples if self.few_shot else fake_example
+
         self.multiple_queries_prompt = PromptTemplate(
             input_variables=["table_info", "column_info", "questions"],
             template=(
@@ -126,8 +135,7 @@ IMPORTANT: Follow these rules:
                 "Your output must strictly follow this JSON format (this is just an example, "
                 "replace with real questions and queries):\n"
                 '{{['
-                '{{"question": "Show me project member roles for the project member INSTITUTO SUPERIOR TECNICO", "sql": "SELECT project_member_roles.description FROM project_member_roles JOIN project_members ON project_member_roles.code = project_members.member_role WHERE project_members.member_name = \'INSTITUTO SUPERIOR TECNICO\'"}}, '
-                '{{"question": "Show me all projects members that are not in the same location as 16.5972215.", "sql": "SELECT projects.homepage FROM projects JOIN project_members ON projects.unics_id = project_members.project WHERE project_members.longitude != 16.5972215"}}'
+                f'{example_block},'
                 '.....'
                 ']}}'),
         )
@@ -264,6 +272,14 @@ Examples:
         action='store_false',
         help='Do not use column descriptions, use basic column info only'
     )
+
+    parser.add_argument(
+        '--few_shot',
+        dest='few_shot',
+        action='store_true',
+        default=True,
+        help='Use few-shot examples in prompts (default: True)'
+    )
     
     # Single question input
     parser.add_argument(
@@ -286,7 +302,12 @@ Examples:
     agent_kwargs = {}
     if args.model:
         agent_kwargs['model_name'] = args.model
-        
+    
+    if args.few_shot:
+        agent_kwargs['few_shot'] = True
+    else:
+        agent_kwargs['few_shot'] = False
+
     agent = create_sql_agent(
         provider=provider_map[args.provider],
         **agent_kwargs
