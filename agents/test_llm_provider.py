@@ -30,7 +30,7 @@ class TestLLMProviders(unittest.TestCase):
         try:
             agent = LLMAgentFactory.create_agent(
                 provider=LLMProvider.OPENAI,
-                model_name="gpt-4o"
+                model_name="gpt-4.1-nano"
             )
             self.assertIsInstance(agent, BaseLLMAgent)
             
@@ -81,7 +81,7 @@ class TestLLMProviders(unittest.TestCase):
         try:
             agent = LLMAgentFactory.create_agent(
                 provider=LLMProvider.OPENAI,
-                model_name="gpt-4o"
+                model_name="gpt-4.1-nano"
             )
             
             if agent.is_available():
@@ -168,7 +168,8 @@ class TestLLMResponses(unittest.TestCase):
             start_time = time.time()
             print(f"Testing {provider.value} response for prompt: {self.test_prompt}")
             response = llm.invoke(self.test_prompt)
-            breakpoint()
+            if type(response) is not str:
+                response = response.content if hasattr(response, 'content') else str(response)
             end_time = time.time()
             
             response_time = end_time - start_time
@@ -200,7 +201,7 @@ class TestLLMResponses(unittest.TestCase):
     
     def test_openai_response(self):
         """Test OpenAI response"""
-        success = self._test_llm_response(LLMProvider.OPENAI, "gpt-4o")
+        success = self._test_llm_response(LLMProvider.OPENAI, "gpt-4.1-nano")
         if success:
             print("✅ OpenAI response test completed")
     
@@ -223,7 +224,7 @@ def run_quick_test():
     print("=" * 50)
     
     providers = [
-        (LLMProvider.OPENAI, "gpt-4o"),
+        (LLMProvider.OPENAI, "gpt-4.1-nano"),
         (LLMProvider.GROQ, "llama-3.1-8b-instant"),
         (LLMProvider.OLLAMA, "qwen3:0.6b")
     ]
@@ -250,7 +251,8 @@ def run_quick_test():
                 # Test simple response
                 try:
                     response = llm.invoke("Say hello")
-                    breakpoint()
+                    if type(response) is not str:
+                        response = response.content if hasattr(response, 'content') else str(response)
                     if response and len(response.strip()) > 0:
                         print(f"   Response Test: ✅ Success")
                         print(f"   Sample Response: {response[:100]}...")
@@ -286,7 +288,7 @@ def run_individual_quick_test(providers: list, custom_model: str = None):
     print("=" * 50)
     
     provider_configs = {
-        "openai": (LLMProvider.OPENAI, custom_model or "gpt-4o"),
+        "openai": (LLMProvider.OPENAI, custom_model or "gpt-4.1-nano"),
         "groq": (LLMProvider.GROQ, custom_model or "llama-3.1-8b-instant"),
         "ollama": (LLMProvider.OLLAMA, custom_model or "qwen3:0.6b")
     }
@@ -315,7 +317,7 @@ def run_individual_quick_test(providers: list, custom_model: str = None):
                     # Test simple response
                     try:
                         response = llm.invoke("Say hello")
-                        if not isinstance(response, str):
+                        if type(response) is not str:
                             response = response.content if hasattr(response, 'content') else str(response)
                         if response and len(response.strip()) > 0:
                             print(f"   Response Test: ✅ Success")
@@ -346,7 +348,7 @@ def run_specific_tests(providers: list, args):
     print(f"🎯 Running Specific Tests for: {', '.join(providers).upper()}\n")
     
     provider_configs = {
-        "openai": (LLMProvider.OPENAI, args.model or "gpt-4o"),
+        "openai": (LLMProvider.OPENAI, args.model or "gpt-4.1-nano"),
         "groq": (LLMProvider.GROQ, args.model or "llama-3.1-8b-instant"),
         "ollama": (LLMProvider.OLLAMA, args.model or "qwen3:0.6b")
     }
@@ -377,6 +379,8 @@ def run_specific_tests(providers: list, args):
                     try:
                         llm = agent.create_llm()
                         response = llm.invoke("What is 2+2?")
+                        if type(response) is not str:
+                            response = response.content if hasattr(response, 'content') else str(response)
                         if response and len(response.strip()) > 0:
                             print(f"   ✅ Response Test: Success")
                             print(f"   📝 Response: {response[:100]}...")
@@ -422,7 +426,7 @@ def run_individual_response_tests(providers: list, custom_model: str = None):
     class IndividualTestLLMResponses(TestLLMResponses):
         def test_individual_responses(self):
             provider_configs = {
-                "openai": (LLMProvider.OPENAI, custom_model or "gpt-4o"),
+                "openai": (LLMProvider.OPENAI, custom_model or "gpt-4.1-nano"),
                 "groq": (LLMProvider.GROQ, custom_model or "llama-3.1-8b-instant"),
                 "ollama": (LLMProvider.OLLAMA, custom_model or "qwen3:0.6b")
             }
