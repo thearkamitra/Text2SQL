@@ -5,8 +5,9 @@ from dotenv import load_dotenv, dotenv_values
 import os
 
 # LangChain imports
+# Note: For Ollama, install the new package: pip install langchain-ollama
 from langchain_openai import ChatOpenAI
-from langchain_community.llms import OllamaLLM as Ollama
+from langchain_ollama import OllamaLLM
 from langchain.llms.base import LLM
 from langchain_groq import ChatGroq
 
@@ -133,9 +134,9 @@ class OllamaAgent(BaseLLMAgent):
         self._llm = None
     
     def create_llm(self) -> LLM:
-        """Create and return a LangChain Ollama instance"""
+        """Create and return a LangChain OllamaLLM instance"""
         if self._llm is None:
-            self._llm = Ollama(
+            self._llm = OllamaLLM(
                 model=self.model_name,
                 base_url=self.base_url,
                 **self.config
@@ -194,55 +195,3 @@ class LLMAgentFactory:
         else:
             raise ValueError(f"Unsupported LLM provider: {provider}")
 
-
-# Usage example:
-if __name__ == "__main__":
-    # Example usage
-    try:
-        # Create OpenAI agent
-        openai_agent = LLMAgentFactory.create_agent(
-            provider=LLMProvider.OPENAI,
-            model_name="gpt-3.5-turbo",
-            api_key="your-openai-api-key"
-        )
-
-        # Get the LangChain LLM instance
-        openai_llm = openai_agent.create_llm()
-        print(f"Created OpenAI LLM: {type(openai_llm)}")
-        
-        # Create Groq agent
-        groq_agent = LLMAgentFactory.create_agent(
-            provider=LLMProvider.GROQ,
-            model_name="llama3-8b-8192"
-        )
-        
-        # Get the LangChain LLM instance
-        groq_llm = groq_agent.create_llm()
-        print(f"Created Groq LLM: {type(groq_llm)}")
-        
-        # Create Ollama agent (no API key needed for local instance)
-        ollama_agent = LLMAgentFactory.create_agent(
-            provider=LLMProvider.OLLAMA,
-            model_name="llama2"
-        )
-        
-        # Get the LangChain LLM instance
-        ollama_llm = ollama_agent.create_llm()
-        print(f"Created Ollama LLM: {type(ollama_llm)}")
-        
-        # Test if services are available
-        print(f"OpenAI available: {openai_agent.is_available()}")
-        print(f"Groq available: {groq_agent.is_available()}")
-        print(f"Ollama available: {ollama_agent.is_available()}")
-        
-        # Now you can use these LLM instances with LangChain chains, prompts, etc.
-        # For example:
-        # from langchain.prompts import PromptTemplate
-        # from langchain.chains import LLMChain
-        # 
-        # prompt = PromptTemplate(template="Tell me about {topic}", input_variables=["topic"])
-        # chain = LLMChain(llm=openai_llm, prompt=prompt)
-        # result = chain.run(topic="machine learning")
-        
-    except Exception as e:
-        print(f"Error: {e}")
