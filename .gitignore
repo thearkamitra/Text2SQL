@@ -5,3 +5,4 @@ __pycache__/
 *.ipynb
 *.env
 datasets/without_fewshot/*
+datasets/with_fewshot/*

@@ -38,6 +38,9 @@ class SQLGenerationAgent:
                  model_name: Optional[str] = None,
                  env_path_name: Optional[str] = None,
                  **kwargs):
+        # Extract few_shot parameter before passing to LLM agent
+        self.few_shot = kwargs.pop('few_shot', True)
+        
         self.llm_agent = LLMAgentFactory.create_agent(
             provider=provider,
             model_name=model_name,
@@ -45,7 +48,6 @@ class SQLGenerationAgent:
             **kwargs
         )
         self.llm = self.llm_agent.create_llm()
-        self.few_shot = kwargs.get('few_shot', True)
         self.table_schemas = {}
         self._setup_prompts()
         self._load_default_schemas()
@@ -185,7 +187,7 @@ IMPORTANT: Follow these rules:
         # Ensure it's wrapped in a JSON array
         if not cleaned.startswith("["):
             cleaned = f"[{cleaned}"
-        breakpoint()  # Debugging point to inspect cleaned output
+        
         try:
             data = json.loads(cleaned)
             if isinstance(data, list):
@@ -237,7 +239,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python agent.py --provider groq --descriptive
+  python agent.py --provider groq 
   python agent.py --provider openai --no-descriptive
   python agent.py --provider ollama --model "qwen2:0.5b"
         """
@@ -247,7 +249,7 @@ Examples:
     parser.add_argument(
         '--provider', 
         choices=['groq', 'openai', 'ollama'],
-        default='groq',
+        default='openai',
         help='LLM provider to use (default: groq)'
     )
     
