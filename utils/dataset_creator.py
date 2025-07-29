@@ -1,8 +1,10 @@
 from database_connector.connect_sql import Connector
 import sqlalchemy
 import json
+from utils.hardness_measure import Evaluator
 
 connector = Connector(path="database_connector/.env")
+evaluator = Evaluator()
 
 def generate_column_info(output_path = "datasets/columns.json"):
     inspector = sqlalchemy.inspect(connector.engine)
@@ -32,7 +34,7 @@ def generate_table_row_info(output_path = "datasets/tables.json"):
         json.dump(table_info, f, indent=4)
 
 def get_fields_of_interest(path = "sciencebenchmark_dataset/cordis/dev.json",natural_language_col = "question", sql_query_col = "query", correct_gt_col = "all_values_found",
-                           output_path = "datasets/total_interest.json"):
+                           output_path = "datasets/total_interest.json", evaluate_hardness = True):
     with open(path, "r") as f:
         data = json.load(f)
     total_interest = []
@@ -41,6 +43,8 @@ def get_fields_of_interest(path = "sciencebenchmark_dataset/cordis/dev.json",nat
         diction["query"] = item[sql_query_col]
         diction["question"] = item[natural_language_col]
         diction["is_correct"] = item[correct_gt_col]
+        if evaluate_hardness:
+            diction["hardness"] = evaluator.eval_hardness(item['sql'])
         total_interest.append(diction)
     with open(output_path, "w") as f:
         json.dump(total_interest, f)
