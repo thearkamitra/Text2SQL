@@ -1,0 +1,131 @@
+{
+    "topics": {
+        "code": "ERC-PoC-2015",
+        "rcn": "664095",
+        "title": "ERC Proof of Concept Grant"
+    },
+    "funding_schemes": {
+        "code": "",
+        "title": "[none]"
+    },
+    "ec_framework_programs": {
+        "ec_framework_program_name": "FP7"
+    },
+    "people": {
+        "unics_id": 1212425,
+        "full_name": "Nicolas James Laurent Fernando De Warren"
+    },
+    "erc_research_domains": {
+        "code": "PE",
+        "description": "Physical Sciences And Engineering"
+    },
+    "erc_panels": {
+        "code": "PE3",
+        "description": "Condensed Matter Physics",
+        "part_of": "PE"
+    },
+    "countries": {
+        "unics_id": 130,
+        "country_name": "Liechtenstein",
+        "country_code2": "LI",
+        "country_code3": "LIE",
+        "geocode_country_code": null
+    },
+    "institutions": {
+        "unics_id": 275572,
+        "country_id": 41,
+        "institutions_name": "Shire International GmbH",
+        "geocode_regions_3": null,
+        "db_pedia_url": null,
+        "wikidata_url": null,
+        "grid_id": null,
+        "acronym": null,
+        "short_name": null,
+        "website": null,
+        "document_vectors": "'gmbh':3 'intern':2 'shire':1"
+    },
+    "eu_territorial_units": {
+        "geocode_regions": "UKN1",
+        "description": null,
+        "geocode_level": 2,
+        "nuts_version": null
+    },
+    "programmes": {
+        "code": "REGIONS-1",
+        "rcn": "10070",
+        "title": "Transnational cooperation between regional research-driven clusters",
+        "short_name": "",
+        "parent": "REGIONS"
+    },
+    "project_erc_panels": {
+        "project": 225744,
+        "panel": "LS4"
+    },
+    "projects": {
+        "unics_id": 156637,
+        "acronym": "NIFREI",
+        "title": "The Effects of Work-Life Balance on Companies, Individuals, and Their Families from Around the World",
+        "ec_call": "FP7-PEOPLE-2009-RG",
+        "ec_fund_scheme": "MC-IRG",
+        "cordis_ref": "94500",
+        "ec_ref": "256489",
+        "start_date": "2010-04-01",
+        "end_date": "2014-03-31",
+        "start_year": 2010,
+        "end_year": 2014,
+        "homepage": null,
+        "total_cost": 100000.0,
+        "ec_max_contribution": 100000.0,
+        "framework_program": "FP7",
+        "objective": "Europe in the last two decades, as with the many parts of the world, has witnessed a substantial increase of the presence of women in the workplace. It has also witnessed a major change in the nature of the workplace, which is ever increasingly more constructed on knowledge-based and service industries. Despite this change in the demographics and in the nature of work, the workplace has not changed substantially. As a consequence, currently, more often than not, corporate and social infrastructures are not ready to welcome people in double earning careers that need to care for children or for elder parents. This study seeks to understand how family-friendly policies affect employees\u2019 lives and their work performance. This ambitious study explores how the organizational, managerial, and individual levels interact, both facilitating or else hindering work-life integration, and the effects of those interactions. There is very limited research that examines the joint effects of flexible policies, supervisor styles, and personal resources on performance both in the workplace and in family life. Similarly, there is a lack of research that examines different effects of those variables depending on the cultural and legal environment in which the company operates. This study seeks to shed light in both questions. The goal of this work is to understand which policies and practices, coupled with cultural values and leadership styles, assist both men and women to integrate their family commitments with their career responsibilities. The Researcher will evaluate, through a multi-country, multi-continent survey, the effects of flexible workplace policies, leadership styles, and personal coping strategies, on the performance and the well-being of both the individual and his or her family. The purpose is to gauge the relationship between work performance and corporate family-friendly policies and to determine their effects on individuals, their families, and their companies.",
+        "principal_investigator": null
+    },
+    "activity_types": {
+        "code": "",
+        "description": "Undefined"
+    },
+    "project_members": {
+        "unics_id": 3519719,
+        "project": 176013,
+        "pic_number": "888897376",
+        "rcn": "1949542",
+        "member_name": "Washington University at St Louis",
+        "activity_type": "HES",
+        "country": "US",
+        "street": null,
+        "city": "St. Louis",
+        "postal_code": null,
+        "ec_contribution": 0.0,
+        "institution_id": 796899,
+        "member_role": "partner",
+        "geocode_regions_3": null,
+        "member_short_name": null,
+        "department_name": null,
+        "vat_number": "MISSING",
+        "latitude": 38.6272733,
+        "longitude": -90.1978889,
+        "region_code": null,
+        "region_name": null
+    },
+    "project_member_roles": {
+        "code": "beneficiary",
+        "description": "Beneficiary"
+    },
+    "project_programmes": {
+        "project": 169314,
+        "programme": "H2020-EU.2.1.1.1."
+    },
+    "project_subject_areas": {
+        "project": 150017,
+        "subject_area": "ICT"
+    },
+    "subject_areas": {
+        "code": "MBI",
+        "title": "Medical biotechnology",
+        "description": ""
+    },
+    "project_topics": {
+        "project": 169314,
+        "topic": "ICT-01-2014"
+    }
+}

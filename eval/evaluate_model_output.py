@@ -1,4 +1,5 @@
 import json
+import os
 from eval.execution_metrics import ExecutionMetrics
 import argparse
 import pandas as pd
@@ -54,5 +55,15 @@ if __name__ == "__main__":
         help='Path to the model predictions file (default: datasets/openai_4o_False_False.json)'
     )
     args = parser.parse_args()
-    get_model_predictions(args.path)
-    get_comparison(path=args.path)
+    if os.path.isdir(args.path):
+        file_paths = [os.path.join(args.path, f) for f in os.listdir(args.path) if f.endswith('.json')]
+        for file_path in file_paths:
+            comparison_file = file_path.replace('.json', '_comparison.csv')
+            if os.path.exists(comparison_file):
+                print(f"Comparison file already exists for {file_path}, skipping...")
+                continue
+            print(f"Evaluating {file_path}...")
+            get_comparison(path=file_path)
+    else:
+        print(f"Evaluating {args.path}...")
+        get_comparison(path=args.path)

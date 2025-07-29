@@ -1,0 +1,768 @@
+{
+  "topics": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "funding_schemes": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "ec_framework_programs": [
+    {
+      "name": "ec_framework_program_name",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "people": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": "nextval('people_unics_id_seq'::regclass)",
+      "autoincrement": true,
+      "comment": null
+    },
+    {
+      "name": "full_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "erc_research_domains": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "erc_panels": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "part_of",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "countries": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "country_name",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "country_code2",
+      "type": "VARCHAR(2)",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "country_code3",
+      "type": "VARCHAR(3)",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "geocode_country_code",
+      "type": "VARCHAR(2)",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "institutions": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "country_id",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "institutions_name",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "geocode_regions_3",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "db_pedia_url",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "wikidata_url",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "grid_id",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "acronym",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "website",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "document_vectors",
+      "type": "TSVECTOR",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "eu_territorial_units": [
+    {
+      "name": "geocode_regions",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "geocode_level",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "nuts_version",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "programmes": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "parent",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_erc_panels": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "panel",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "projects": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": "nextval('projects_unics_id_seq'::regclass)",
+      "autoincrement": true,
+      "comment": null
+    },
+    {
+      "name": "acronym",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "ec_call",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "ec_fund_scheme",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "cordis_ref",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "ec_ref",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "start_date",
+      "type": "DATE",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "end_date",
+      "type": "DATE",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "start_year",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "end_year",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "homepage",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "total_cost",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "ec_max_contribution",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "framework_program",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "objective",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "principal_investigator",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "activity_types": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_members": [
+    {
+      "name": "unics_id",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": "nextval('project_members_unics_id_seq'::regclass)",
+      "autoincrement": true,
+      "comment": null
+    },
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "pic_number",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "rcn",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "member_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "activity_type",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "country",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "street",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "city",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "postal_code",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "ec_contribution",
+      "type": "DOUBLE PRECISION",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "institution_id",
+      "type": "INTEGER",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "member_role",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "geocode_regions_3",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "member_short_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "department_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "vat_number",
+      "type": "VARCHAR",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "latitude",
+      "type": "NUMERIC",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "longitude",
+      "type": "NUMERIC",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "region_code",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "region_name",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_member_roles": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_programmes": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "programme",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_subject_areas": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "subject_area",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "subject_areas": [
+    {
+      "name": "code",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "title",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "description",
+      "type": "TEXT",
+      "nullable": true,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ],
+  "project_topics": [
+    {
+      "name": "project",
+      "type": "INTEGER",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    },
+    {
+      "name": "topic",
+      "type": "TEXT",
+      "nullable": false,
+      "default": null,
+      "autoincrement": false,
+      "comment": null
+    }
+  ]
+}
